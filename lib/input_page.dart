@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'constants.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
+import 'round_icon_button.dart';
 
 //enum determining selected gender
 //Gender choice
@@ -19,9 +21,20 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender gender;
+  //height based in cm, and that is used to convert and display in ft and in too
   int heightCM = 180;
   int heightFt = 180 ~/ 30.48;
   int heightIn = (180 % 30.48) ~/ 2.54;
+  //weight
+  //kgs
+  int weight = (132 / 2.2).round();
+  //lbs
+  int weightLBS = 132;
+  //text size of weight display
+  double weightTextSize = 30.0;
+
+  //age
+  int age = 30;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +45,7 @@ class _InputPageState extends State<InputPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          /*       Row for Male/Female Buttons       */
           Expanded(
             child: Row(
               children: <Widget>[
@@ -66,6 +80,7 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
+          /*       Height Slider       */
           Expanded(
             child: ReusableCard(
               color: kActiveCardColor,
@@ -95,16 +110,7 @@ class _InputPageState extends State<InputPage> {
                     ],
                   ),
                   SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      inactiveTrackColor: Color(0xff8d8e98),
-                      activeTrackColor: Color(0xffffffff),
-                      thumbShape:
-                          RoundSliderThumbShape(enabledThumbRadius: 15.0),
-                      overlayShape:
-                          RoundSliderOverlayShape(overlayRadius: 30.0),
-                      thumbColor: Color(0xffeb1555),
-                      overlayColor: Color(0x45eb1555),
-                    ),
+                    data: SliderTheme.of(context),
                     child: Slider(
                       value: heightCM.toDouble(),
                       min: kMinHeight,
@@ -145,14 +151,129 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
           ),
+          /*       Bottom Row of buttons - weight and age       */
           Expanded(
             child: Row(
               children: <Widget>[
+                //Weight
                 Expanded(
-                  child: ReusableCard(color: kActiveCardColor),
+                  child: ReusableCard(
+                    color: kActiveCardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'WEIGHT',
+                          style: kLabelTextStyle,
+                        ),
+                        SizedBox(
+                          height: 13.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: <Widget>[
+                            //Metric Weight
+                            Text(
+                              weight.toString(),
+                              style: kNumberTextStyle.copyWith(
+                                  fontSize: weightTextSize),
+                            ),
+                            Text(
+                              ' kg ',
+                              style: kLabelTextStyle,
+                            ),
+                            //Imperial Weight
+                            Text(
+                              weightLBS.toString(),
+                              style: kNumberTextStyle.copyWith(
+                                  fontSize: weightTextSize),
+                            ),
+                            Text(
+                              ' lbs ',
+                              style: kLabelTextStyle,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  weightLBS--;
+                                  weight = (weightLBS / 2.2).round();
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  weightLBS++;
+                                  weight = (weightLBS / 2.2).round();
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+
+                //AGE
                 Expanded(
-                  child: ReusableCard(color: kActiveCardColor),
+                  child: ReusableCard(
+                    color: kActiveCardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'AGE',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberTextStyle.copyWith(
+                            fontSize: 50.0,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPressed: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

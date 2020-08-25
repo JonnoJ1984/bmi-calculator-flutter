@@ -18,3 +18,5 @@ const kNumberTextStyle = TextStyle(fontSize: 25.0, fontWeight: FontWeight.w900);
 //slider
 const kMinHeight = 120.0;
 const kMaxHeight = 220.0;
+//buttonColor
+const kButtonColor = Color(0xff4c4f5e);
