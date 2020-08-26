@@ -15,12 +15,13 @@ class BottomButton extends StatelessWidget {
       child: Container(
         color: kBottomContainerColor,
         margin: EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
         width: double.infinity,
         height: kBottomContainerHeight,
         child: Center(
           child: Text(
             text,
-            style: kNumberTextStyle,
+            style: kBottomButtonTextStyle,
           ),
         ),
       ),

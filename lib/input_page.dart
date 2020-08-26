@@ -35,6 +35,9 @@ class _InputPageState extends State<InputPage> {
   //text size of weight display
   double weightTextSize = 30.0;
 
+  //BMI
+  double bmi;
+
   //age
   int age = 30;
 
@@ -283,6 +286,7 @@ class _InputPageState extends State<InputPage> {
           BottomButton(
             text: 'CALCULATE',
             onTap: () {
+              bmi = calculateResult();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ResultsPage()),
@@ -292,5 +296,9 @@ class _InputPageState extends State<InputPage> {
         ],
       ),
     );
+  }
+
+  double calculateResult() {
+    return weight * ((heightCM / 100) * (heightCM / 100));
   }
 }
