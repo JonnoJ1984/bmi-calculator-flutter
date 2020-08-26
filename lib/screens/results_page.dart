@@ -1,23 +1,26 @@
-import 'package:bmi_calculator/bottom_button.dart';
-import 'package:bmi_calculator/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'reusable_card.dart';
+import 'file:///C:/Users/jonat/AndroidStudioProjects/bmi-calculator-flutter/bmi-calculator-flutter/lib/components/bottom_button.dart';
+
+import '../components/constants.dart';
+import '../components/reusable_card.dart';
 
 class ResultsPage extends StatelessWidget {
-  final category = 'OVERWEIGHT';
-  final double result = 0.0;
-  final String comment = 'This is your comment';
+  final String result;
+  final String category;
+  final String comment;
+
+  ResultsPage(
+      {@required this.result, @required this.category, @required this.comment});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: UnconstrainedBox(
-        child: Text(
+        title: Text(
           'BMI CALCULATOR',
         ),
-      )),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,12 +54,15 @@ class ResultsPage extends StatelessWidget {
                     style: kLabelTextStyle.copyWith(color: Color(0xff24d876)),
                   ),
                   Text(
-                    result.toString(),
+                    result,
                     style: kNumberTextStyle.copyWith(fontSize: 100.0),
                   ),
-                  Text(
-                    comment,
-                    style: kLabelTextStyle.copyWith(fontSize: 22.0),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Text(
+                      comment,
+                      style: kLabelTextStyle.copyWith(fontSize: 22.0),
+                    ),
                   ),
                 ],
               ),

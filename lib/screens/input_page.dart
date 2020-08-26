@@ -1,13 +1,16 @@
-import 'package:bmi_calculator/bottom_button.dart';
-import 'package:bmi_calculator/results_page.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'constants.dart';
-import 'icon_content.dart';
-import 'reusable_card.dart';
-import 'round_icon_button.dart';
+import 'file:///C:/Users/jonat/AndroidStudioProjects/bmi-calculator-flutter/bmi-calculator-flutter/lib/components/bottom_button.dart';
+import 'file:///C:/Users/jonat/AndroidStudioProjects/bmi-calculator-flutter/bmi-calculator-flutter/lib/screens/results_page.dart';
+
+import '../calculator_brain.dart';
+import '../components/constants.dart';
+import '../components/icon_content.dart';
+import '../components/reusable_card.dart';
+import '../components/round_icon_button.dart';
 
 //enum determining selected gender
 //Gender choice
@@ -34,9 +37,6 @@ class _InputPageState extends State<InputPage> {
   int weightLBS = 132;
   //text size of weight display
   double weightTextSize = 30.0;
-
-  //BMI
-  double bmi;
 
   //age
   int age = 30;
@@ -286,19 +286,21 @@ class _InputPageState extends State<InputPage> {
           BottomButton(
             text: 'CALCULATE',
             onTap: () {
-              bmi = calculateResult();
+              CalculatorBrain calc =
+                  CalculatorBrain(height: heightCM, weight: weight);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ResultsPage()),
+                MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                          result: calc.getResult(),
+                          category: calc.getCategory(),
+                          comment: calc.getComment(),
+                        )),
               );
             },
           )
         ],
       ),
     );
-  }
-
-  double calculateResult() {
-    return weight * ((heightCM / 100) * (heightCM / 100));
   }
 }
